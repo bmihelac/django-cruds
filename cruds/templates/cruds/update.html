@@ -1,0 +1,15 @@
+{% extends "cruds/base.html" %}
+{% load i18n %}
+
+{% block body %}
+  <h1>{% trans "Edit" %} {{ model_verbose_name }}</h1>
+
+  {% include "cruds/_form.html" %}
+
+  {% if url_delete %}
+    <p>
+      <a href="{{ url_delete }}" class="btn btn-danger">{% trans "Delete" %}</a>
+    </p>
+  {% endif %}
+{% endblock %}
+

@@ -1,0 +1,9 @@
+{% extends "cruds/base.html" %}
+{% load i18n %}
+
+{% block body %}
+  <h1>{% trans "New" %} {{ model_verbose_name }}</h1>
+
+  {% include "cruds/_form.html" %}
+{% endblock %}
+

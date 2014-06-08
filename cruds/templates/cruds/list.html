@@ -1,0 +1,42 @@
+{% extends "cruds/base.html" %}
+{% load i18n %}
+{% load crud_tags %}
+
+{% block body %}
+  <h1>{{ model_verbose_name }}</h1>
+
+  {% if url_create %}
+    <p>
+      <a href="{{ url_create }}" class="btn btn-default">{% trans "New" %}</a>
+    </p>
+  {% endif %}
+
+  {% if object_list %}
+
+  <table class="table">
+    <thead>
+      {% for field in fields %}
+        <th>{{ field }}</th>
+      {% endfor %}
+      <th></th>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          {% for field in fields.keys %}
+          <td>{{ object|get_attr:field }}</td>
+          {% endfor %}
+          <td>
+            {% if object.get_absolute_url %}
+              <a href="{{ object.get_absolute_url }}">{% trans "View" %}</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+    <p>{% trans "List is empty" %}</p>
+  {% endif %}
+{% endblock %}
