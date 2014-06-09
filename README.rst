@@ -21,13 +21,17 @@ Add CRUD for whole app, add this to urls.py::
     from cruds.urls import crud_for_app
     urlpatterns += crud_for_app('testapp')
 
-This will create following urls and appropriate views::
+This will create following urls and appropriate views:
 
-    /testapp/author/
-    /testapp/author/new/
-    /testapp/author/(?P<pk>\d+)/
-    /testapp/author/edit/(?P<pk>\d+)/
-    /testapp/author/remove/(?P<pk>\d+)/
+===================================== =====================
+URL                                   name
+===================================== =====================
+/testapp/author/                      testapp_author_list
+/testapp/author/new/                  testapp_author_create
+/testapp/author/(?P<pk>\d+)/          testapp_author_detail
+/testapp/author/edit/(?P<pk>\d+)/     testapp_author_update
+/testapp/author/remove/(?P<pk>\d+)/   testapp_author_delete
+===================================== =====================
 
 it is also possible to add CRUD for one model::
 
