@@ -52,3 +52,9 @@ Install django-cruds::
     pip install django-cruds
 
 Then use it in a project, add ``cruds`` to ``INSTALLED_APPS``.
+
+Requirements
+------------
+
+Python 2.7+ or Python 3.3+
+Django 1.4.2+
