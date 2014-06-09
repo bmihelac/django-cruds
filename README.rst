@@ -19,12 +19,13 @@ django-cruds goal is to make prototyping faster.
 Documentation
 -------------
 
-Add CRUD for whole app, add this to urls.py::
+To add CRUD for whole app, add this to urls.py::
 
     from cruds.urls import crud_for_app
     urlpatterns += crud_for_app('testapp')
 
-This will create following urls and appropriate views:
+This will create following urls and appropriate views (assuming 
+there is a application named ``testapp`` with model ``Author``:
 
 ===================================== =====================
 URL                                   name
