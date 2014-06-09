@@ -11,7 +11,7 @@ django-cruds
 django-cruds is simple drop-in django app that creates CRUD
 (Create, read, update and delete) views for existing models and apps.
 
-It aims is to make prototyping faster.
+django-cruds goal is to make prototyping faster.
 
 Documentation
 -------------
