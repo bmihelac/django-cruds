@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from collections import OrderedDict
+
 from django.core.urlresolvers import (
     NoReverseMatch,
     reverse,
@@ -28,7 +30,7 @@ class CRUDMixin(object):
             'model_verbose_name_plural': self.model._meta.verbose_name_plural,
         })
 
-        fields = {}
+        fields = OrderedDict()
         for field in self.model._meta.fields:
             if field.editable:
                 fields[field.name] = field.verbose_name
