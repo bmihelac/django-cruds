@@ -59,13 +59,14 @@ def crud_for_model(model, urlprefix=None):
     return urls
 
 
-def crud_for_app(app_label):
+def crud_for_app(app_label, urlprefix=None):
     """
     Returns list of ``url`` items to CRUD an app.
     """
+    if urlprefix is None:
+        urlprefix = app_label + '/'
     app = get_app(app_label)
     urls = []
-    urlprefix = app_label + '/'
     for model in get_models(app):
         urls += crud_for_model(model, urlprefix)
     return urls
