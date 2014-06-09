@@ -3,7 +3,7 @@
 History
 -------
 
-0.1.1 (unreleased)
+0.1.1 (2014-06-09)
 ++++++++++++++++++
 
 - Handle and FK returns link to detail view if exists.
