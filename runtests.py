@@ -11,15 +11,16 @@ try:
                 "ENGINE": "django.db.backends.sqlite3",
             }
         },
-        ROOT_URLCONF="cruds.urls",
         INSTALLED_APPS=[
             "django.contrib.auth",
             "django.contrib.contenttypes",
             "django.contrib.sites",
             "cruds",
+            "tests.testapp",
         ],
         SITE_ID=1,
         NOSE_ARGS=['-s'],
+        ROOT_URLCONF='tests.testapp.urls',
     )
 
     try:
