@@ -8,6 +8,9 @@ django-cruds
 .. image:: https://coveralls.io/repos/bmihelac/django-cruds/badge.png?branch=master
     :target: https://coveralls.io/r/bmihelac/django-cruds?branch=master
 
+.. image:: https://pypip.in/v/django-cruds/badge.png   
+    :target: https://crate.io/packages/django-cruds
+
 django-cruds is simple drop-in django app that creates CRUD
 (Create, read, update and delete) views for existing models and apps.
 
