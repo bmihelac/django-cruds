@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from . import utils
 from django.core.urlresolvers import (
     NoReverseMatch,
     reverse,
@@ -13,6 +12,8 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
+
+from . import utils
 
 
 class CRUDMixin(object):
