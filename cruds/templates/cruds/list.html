@@ -15,8 +15,8 @@
 
   <table class="table">
     <thead>
-      {% for field in fields %}
-        <th>{{ field }}</th>
+      {% for field, field_name in fields.items %}
+        <th>{{ field_name }}</th>
       {% endfor %}
       <th></th>
     </thead>
