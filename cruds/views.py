@@ -52,6 +52,11 @@ class CRUDMixin(object):
 
         return context
 
+    def get_success_url(self):
+        return reverse(
+            utils.crud_url_name(self.model, utils.ACTION_DETAIL),
+            kwargs={'pk': self.object.pk})
+
 
 class CRUDCreateView(CRUDMixin, CreateView):
     template_name = 'cruds/create.html'
