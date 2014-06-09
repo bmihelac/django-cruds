@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.test.testcases import TestCase
@@ -15,7 +16,7 @@ class TestIntegration(TestCase):
     def test_list(self):
         response = self.client.get('/testapp/author/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Foo', response.content)
+        self.assertContains(response, 'Foo')
 
     def test_create(self):
         response = self.client.get('/testapp/author/new/')
@@ -30,8 +31,8 @@ class TestIntegration(TestCase):
     def test_detail(self):
         response = self.client.get('/testapp/author/%s/' %
                                    self.author.pk)
-        self.assertIn('Foo', response.content)
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Foo')
 
     def test_update(self):
         url = '/testapp/author/edit/%s/' % self.author.pk
