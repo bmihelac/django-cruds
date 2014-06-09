@@ -24,7 +24,9 @@
       {% for object in object_list %}
         <tr>
           {% for field in fields.keys %}
-          <td>{{ object|get_attr:field }}</td>
+          <td>
+            {{ object|format_value:field }}
+          </td>
           {% endfor %}
           <td>
             {% crud_url object "detail" as url %}
