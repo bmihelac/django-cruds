@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-import os.path
-
 from django.test.testcases import TestCase
 
 from tests.testapp.models import (
