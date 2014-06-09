@@ -27,8 +27,9 @@
           <td>{{ object|get_attr:field }}</td>
           {% endfor %}
           <td>
-            {% if object.get_absolute_url %}
-              <a href="{{ object.get_absolute_url }}">{% trans "View" %}</a>
+            {% crud_url object "detail" as url %}
+            {% if url %}
+              <a href="{{ url }}">{% trans "View" %}</a>
             {% endif %}
           </td>
         </tr>
