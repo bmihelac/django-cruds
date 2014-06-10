@@ -3,7 +3,7 @@
 History
 -------
 
-0.1.2 (unreleased)
+0.1.2 (2014-06-10)
 ++++++++++++++++++
 
 - FIX: action url patterns should be in format /appname/model/3/edit/ and not
