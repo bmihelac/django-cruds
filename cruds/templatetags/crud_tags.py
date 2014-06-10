@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import six
+
 from django.db.models import Model
 from django import template
 from django.core.urlresolvers import (
@@ -48,3 +50,31 @@ def format_value(obj, field_name):
         if url:
             return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
     return value
+
+
+@register.inclusion_tag('cruds/templatetags/crud_fields.html')
+def crud_fields(obj, fields=None):
+    """
+    Display object fields in table rows::
+
+        <table>
+            {% crud_fields object 'id, %}
+        </table>
+
+    * ``fields`` fields to include
+
+        If fields is ``None`` all fields will be displayed.
+        If fields is ``string`` comma separated field names will be
+        displayed.
+        if field is dictionary, key should be field name and value
+        field verbose name.
+    """
+    if fields is None:
+        fields = utils.get_fields(type(obj))
+    elif isinstance(fields, six.string_types):
+        field_names = [f.strip() for f in fields.split(',')]
+        fields = utils.get_fields(type(obj), include=field_names)
+    return {
+        'object': obj,
+        'fields': fields,
+    }

@@ -14,16 +14,8 @@
 
   <table class="table">
     <tbody>
-      {% for field, field_name in fields.items %}
-        <tr>
-          <th>{{ field_name }}</th>
-          <td>
-            {{ object|format_value:field }}
-          </td>
-        </tr>
-      {% endfor %}
+      {% crud_fields object fields %}
     </tbody>
-    <tbody>
   </table>
 
 

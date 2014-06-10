@@ -37,11 +37,22 @@ URL                                   name
 /testapp/author/remove/(?P<pk>\d+)/   testapp_author_delete
 ===================================== =====================
 
-it is also possible to add CRUD for one model::
+It is also possible to add CRUD for one model::
 
     from django.db.models.loading import get_model
     from cruds.urls import crud_for_model
     urlpatterns += crud_for_model(get_model('testapp', 'Author'))
+
+``crud_fields`` templatetag displays fields for an object::
+
+    {% load crud_tags %}
+
+    <table class="table">
+      <tbody>
+        {% crud_fields object "name, description" %}
+      </tbody>
+    </table>
+
 
 
 Quickstart
