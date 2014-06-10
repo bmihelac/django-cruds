@@ -6,8 +6,7 @@ History
 0.1.2 (unreleased)
 ++++++++++++++++++
 
-- Nothing changed yet.
-
+- add ``crud_fields`` templatetag
 
 0.1.1 (2014-06-09)
 ++++++++++++++++++
