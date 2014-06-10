@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import six
+from django.utils import six
 
 from django.db.models import Model
 from django import template
