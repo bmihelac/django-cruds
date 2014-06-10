@@ -6,6 +6,9 @@ History
 0.1.2 (unreleased)
 ++++++++++++++++++
 
+- FIX: action url patterns should be in format /appname/model/3/edit/ and not
+  /appname/model/edit/3/
+
 - add ``crud_fields`` templatetag
 
 0.1.1 (2014-06-09)

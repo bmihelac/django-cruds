@@ -33,8 +33,8 @@ URL                                   name
 /testapp/author/                      testapp_author_list
 /testapp/author/new/                  testapp_author_create
 /testapp/author/(?P<pk>\d+)/          testapp_author_detail
-/testapp/author/edit/(?P<pk>\d+)/     testapp_author_update
-/testapp/author/remove/(?P<pk>\d+)/   testapp_author_delete
+/testapp/author/(?P<pk>\d+)/edit/     testapp_author_update
+/testapp/author/(?P<pk>\d+)/remove/   testapp_author_delete
 ===================================== =====================
 
 It is also possible to add CRUD for one model::

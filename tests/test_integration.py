@@ -35,7 +35,7 @@ class TestIntegration(TestCase):
         self.assertContains(response, 'Foo')
 
     def test_update(self):
-        url = '/testapp/author/edit/%s/' % self.author.pk
+        url = '/testapp/author/%s/edit/' % self.author.pk
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -45,7 +45,7 @@ class TestIntegration(TestCase):
         self.assertRedirects(response, '/testapp/author/%s/' % self.author.pk)
 
     def test_delete(self):
-        url = '/testapp/author/remove/%s/' % self.author.pk
+        url = '/testapp/author/%s/remove/' % self.author.pk
         response = self.client.post(url)
         self.assertEqual(Author.objects.count(), 0)
         self.assertRedirects(response, '/testapp/author/')

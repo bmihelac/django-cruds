@@ -33,7 +33,7 @@ def crud_for_model(model, urlprefix=None):
     ))
 
     urls.append(url(
-        r'%s/remove/(?P<pk>\d+)/$' % urlprefix,
+        r'%s/(?P<pk>\d+)/remove/$' % urlprefix,
         CRUDDeleteView.as_view(model=model),
         name=utils.crud_url_name(model, utils.ACTION_DELETE)
     ))
@@ -45,7 +45,7 @@ def crud_for_model(model, urlprefix=None):
     ))
 
     urls.append(url(
-        r'%s/edit/(?P<pk>\d+)/$' % urlprefix,
+        r'%s/(?P<pk>\d+)/edit/$' % urlprefix,
         CRUDUpdateView.as_view(model=model),
         name=utils.crud_url_name(model, utils.ACTION_UPDATE)
     ))
