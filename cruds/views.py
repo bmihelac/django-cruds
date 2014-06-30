@@ -17,6 +17,7 @@ from . import utils
 
 
 class CRUDMixin(object):
+    crud_template_name = None
 
     def get_context_data(self, **kwargs):
         """
@@ -49,6 +50,15 @@ class CRUDMixin(object):
 
         return context
 
+    def get_template_names(self):
+        """
+        Adds crud_template_name to default template names.
+        """
+        names = super(CRUDMixin, self).get_template_names()
+        if self.crud_template_name:
+            names.append(self.crud_template_name)
+        return names
+
     def get_success_url(self):
         return reverse(
             utils.crud_url_name(self.model, utils.ACTION_DETAIL),
@@ -56,23 +66,23 @@ class CRUDMixin(object):
 
 
 class CRUDCreateView(CRUDMixin, CreateView):
-    template_name = 'cruds/create.html'
+    crud_template_name = 'cruds/create.html'
 
 
 class CRUDDeleteView(CRUDMixin, DeleteView):
-    template_name = 'cruds/delete.html'
+    crud_template_name = 'cruds/delete.html'
 
     def get_success_url(self):
         return reverse(utils.crud_url_name(self.model, utils.ACTION_LIST))
 
 
 class CRUDDetailView(CRUDMixin, DetailView):
-    template_name = 'cruds/detail.html'
+    crud_template_name = 'cruds/detail.html'
 
 
 class CRUDListView(CRUDMixin, ListView):
-    template_name = 'cruds/list.html'
+    crud_template_name = 'cruds/list.html'
 
 
 class CRUDUpdateView(CRUDMixin, UpdateView):
-    template_name = 'cruds/update.html'
+    crud_template_name = 'cruds/update.html'

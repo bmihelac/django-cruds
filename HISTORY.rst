@@ -6,8 +6,8 @@ History
 0.1.3 (unreleased)
 ++++++++++++++++++
 
-- Nothing changed yet.
-
+- append instead of prepending CRUD template name to a list of default
+  candidate template names
 
 0.1.2 (2014-06-10)
 ++++++++++++++++++

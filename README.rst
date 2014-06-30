@@ -53,7 +53,19 @@ It is also possible to add CRUD for one model::
       </tbody>
     </table>
 
+Templates
+^^^^^^^^^
 
+django-cruds views will append CRUD template name to a list of default
+candidate template names for given action.
+
+CRUD Templates are::
+
+    cruds/create.html
+    cruds/delete.html
+    cruds/detail.html
+    cruds/list.html
+    cruds/update.html
 
 Quickstart
 ----------
