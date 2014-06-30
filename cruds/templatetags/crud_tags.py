@@ -81,3 +81,11 @@ def crud_fields(obj, fields=None):
         'object': obj,
         'fields': fields,
     }
+
+
+@register.assignment_tag
+def get_fields(model, include=None):
+    """
+    Assigns fields for model.
+    """
+    return utils.get_fields(model, include)

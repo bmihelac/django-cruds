@@ -6,7 +6,7 @@ History
 0.1.5 (unreleased)
 ++++++++++++++++++
 
-- Nothing changed yet.
+- ADD: get_fields assignment_tag
 
 
 0.1.4 (2014-06-30)
