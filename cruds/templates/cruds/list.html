@@ -15,10 +15,12 @@
 
   <table class="table">
     <thead>
-      {% for field, field_name in fields.items %}
-        <th>{{ field_name }}</th>
-      {% endfor %}
-      <th></th>
+      <tr>
+        {% for field, field_name in fields.items %}
+          <th>{{ field_name }}</th>
+        {% endfor %}
+        <th></th>
+      </tr>
     </thead>
     <tbody>
       {% for object in object_list %}
