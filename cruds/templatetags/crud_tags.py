@@ -44,6 +44,9 @@ def format_value(obj, field_name):
 
     If value is model instance returns link to detail view if exists.
     """
+    display_func = getattr(obj, 'get_%s_display' % field_name, None)
+    if display_func:
+        return display_func()
     value = getattr(obj, field_name)
     if isinstance(value, Model):
         url = crud_url(value, utils.ACTION_DETAIL)

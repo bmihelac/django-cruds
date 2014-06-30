@@ -6,8 +6,7 @@ History
 0.1.4 (unreleased)
 ++++++++++++++++++
 
-- Nothing changed yet.
-
+- add human-readable name for the field’s with choices
 
 0.1.3 (2014-06-30)
 ++++++++++++++++++
