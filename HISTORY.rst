@@ -3,7 +3,7 @@
 History
 -------
 
-0.1.3 (unreleased)
+0.1.3 (2014-06-30)
 ++++++++++++++++++
 
 - append instead of prepending CRUD template name to a list of default
