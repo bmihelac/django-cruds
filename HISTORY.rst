@@ -3,7 +3,7 @@
 History
 -------
 
-0.1.5 (unreleased)
+0.1.5 (2014-07-01)
 ++++++++++++++++++
 
 - ADD: get_fields assignment_tag
