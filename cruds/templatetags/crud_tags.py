@@ -52,6 +52,10 @@ def format_value(obj, field_name):
         url = crud_url(value, utils.ACTION_DETAIL)
         if url:
             return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
+        else:
+            if hasattr(value, 'get_absolute_url'):
+                url = getattr(value, 'get_absolute_url')()
+                return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
     return value
 
 
