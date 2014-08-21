@@ -53,6 +53,15 @@ It is also possible to add CRUD for one model::
       </tbody>
     </table>
 
+Use ``cruds.util.crud_url`` shortcut function to quickly get url for
+instance for given action::
+
+    crud_url(author, 'update')
+
+Is same as::
+
+        reverse('testapp_author_update', kwargs={'pk': author.pk})
+
 Templates
 ^^^^^^^^^
 

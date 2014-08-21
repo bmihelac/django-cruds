@@ -6,7 +6,7 @@ History
 0.1.6 (unreleased)
 ++++++++++++++++++
 
-- Nothing changed yet.
+- ADD: cruds.util.crud_url function
 
 
 0.1.5 (2014-07-01)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
+
 from collections import OrderedDict
 
 
@@ -43,3 +45,20 @@ def get_fields(model, include=None):
         if field.editable:
             fields[field.name] = field.verbose_name
     return fields
+
+
+def crud_url(instance, action):
+    """
+    Shortcut function returns url for instance and action passing `pk` kwarg.
+
+    Example:
+
+        crud_url(author, 'update')
+
+    Is same as:
+
+        reverse('testapp_author_update', kwargs={'pk': author.pk})
+    """
+    return reverse(crud_url_name(instance._meta.model, action), kwargs={
+        'pk': instance.pk
+    })
