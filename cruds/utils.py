@@ -25,13 +25,15 @@ LIST_ACTIONS = (
 ALL_ACTIONS = LIST_ACTIONS + INSTANCE_ACTIONS
 
 
-def crud_url_name(model, action):
+def crud_url_name(model, action, prefix=None):
     """
     Returns url name for given model and action.
     """
+    if prefix is None:
+        prefix = ""
     app_label = model._meta.app_label
     model_lower = model.__name__.lower()
-    return '%s_%s_%s' % (app_label, model_lower, action)
+    return '%s%s_%s_%s' % (prefix, app_label, model_lower, action)
 
 
 def get_fields(model, include=None):
@@ -47,7 +49,7 @@ def get_fields(model, include=None):
     return fields
 
 
-def crud_url(instance, action):
+def crud_url(instance, action, prefix=None):
     """
     Shortcut function returns url for instance and action passing `pk` kwarg.
 
@@ -59,6 +61,7 @@ def crud_url(instance, action):
 
         reverse('testapp_author_update', kwargs={'pk': author.pk})
     """
-    return reverse(crud_url_name(instance._meta.model, action), kwargs={
-        'pk': instance.pk
-    })
+    return reverse(crud_url_name(instance._meta.model, action, prefix),
+                   kwargs={
+                       'pk': instance.pk
+                   })
