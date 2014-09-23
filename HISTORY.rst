@@ -6,7 +6,7 @@ History
 0.1.7 (unreleased)
 ++++++++++++++++++
 
-- Nothing changed yet.
+- Add optional prefix to crud_url_name, crud_url functions.
 
 
 0.1.6 (2014-08-21)
