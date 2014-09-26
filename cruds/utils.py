@@ -49,7 +49,7 @@ def get_fields(model, include=None):
     return fields
 
 
-def crud_url(instance, action, prefix=None):
+def crud_url(instance, action, prefix=None, additional_kwargs=None):
     """
     Shortcut function returns url for instance and action passing `pk` kwarg.
 
@@ -61,7 +61,8 @@ def crud_url(instance, action, prefix=None):
 
         reverse('testapp_author_update', kwargs={'pk': author.pk})
     """
+    if additional_kwargs is None:
+        additional_kwargs = {}
+    additional_kwargs['pk'] = instance.pk
     return reverse(crud_url_name(instance._meta.model, action, prefix),
-                   kwargs={
-                       'pk': instance.pk
-                   })
+                   kwargs=additional_kwargs)
