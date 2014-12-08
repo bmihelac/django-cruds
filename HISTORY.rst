@@ -3,7 +3,7 @@
 History
 -------
 
-0.1.8 (unreleased)
+0.1.8 (2014-12-08)
 ++++++++++++++++++
 
 - ``format_value`` display FileField url
