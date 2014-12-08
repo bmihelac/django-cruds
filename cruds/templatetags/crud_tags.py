@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.utils import six
+import os.path
 
-from django.db.models import Model
+from django.utils import six
+from django.db import models
 from django import template
 from django.core.urlresolvers import (
     NoReverseMatch,
@@ -48,7 +49,17 @@ def format_value(obj, field_name):
     if display_func:
         return display_func()
     value = getattr(obj, field_name)
-    if isinstance(value, Model):
+
+    if isinstance(value, models.fields.files.FieldFile):
+        if value:
+            return mark_safe('<a href="%s">%s</a>' % (
+                value.url,
+                os.path.basename(value.name),
+            ))
+        else:
+            return ''
+
+    if isinstance(value, models.Model):
         url = crud_url(value, utils.ACTION_DETAIL)
         if url:
             return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
