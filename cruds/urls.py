@@ -30,7 +30,7 @@ def crud_for_model(dest_model, urlprefix=None):
 
     class CRUDCreateView(CRUDMixin, CreateView):
         model = dest_model
-        fields = [f.name for f in dest_model._meta.fields]
+        fields = '__all__'
         crud_template_name = 'cruds/create.html'
 
     class CRUDDeleteView(CRUDMixin, DeleteView):
@@ -42,17 +42,17 @@ def crud_for_model(dest_model, urlprefix=None):
 
     class CRUDDetailView(CRUDMixin, DetailView):
         model = dest_model
-        fields = [f.name for f in dest_model._meta.fields]
+        fields = '__all__'
         crud_template_name = 'cruds/detail.html'
 
     class CRUDListView(CRUDMixin, ListView):
         model = dest_model
-        fields = [f.name for f in dest_model._meta.fields]
+        fields = '__all__'
         crud_template_name = 'cruds/list.html'
 
     class CRUDUpdateView(CRUDMixin, UpdateView):
         model = dest_model
-        fields = [f.name for f in dest_model._meta.fields]
+        fields = '__all__'
         crud_template_name = 'cruds/update.html'
 
     urls.append(url(
