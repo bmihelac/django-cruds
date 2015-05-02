@@ -17,6 +17,7 @@ from . import utils
 
 
 class CRUDMixin(object):
+    fields = []
     crud_template_name = None
 
     def get_context_data(self, **kwargs):
@@ -64,25 +65,3 @@ class CRUDMixin(object):
             utils.crud_url_name(self.model, utils.ACTION_DETAIL),
             kwargs={'pk': self.object.pk})
 
-
-class CRUDCreateView(CRUDMixin, CreateView):
-    crud_template_name = 'cruds/create.html'
-
-
-class CRUDDeleteView(CRUDMixin, DeleteView):
-    crud_template_name = 'cruds/delete.html'
-
-    def get_success_url(self):
-        return reverse(utils.crud_url_name(self.model, utils.ACTION_LIST))
-
-
-class CRUDDetailView(CRUDMixin, DetailView):
-    crud_template_name = 'cruds/detail.html'
-
-
-class CRUDListView(CRUDMixin, ListView):
-    crud_template_name = 'cruds/list.html'
-
-
-class CRUDUpdateView(CRUDMixin, UpdateView):
-    crud_template_name = 'cruds/update.html'

@@ -2,23 +2,25 @@
 from __future__ import unicode_literals
 
 from django.conf.urls import url
+from django.core.urlresolvers import reverse
 from django.db.models import get_app, get_models
-
-from . import utils
-from .views import (
-    CRUDCreateView,
-    CRUDDeleteView,
-    CRUDDetailView,
-    CRUDListView,
-    CRUDUpdateView,
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
 )
 
+from . import utils
+from .views import CRUDMixin
 
-def crud_for_model(model, urlprefix=None):
+
+def crud_for_model(dest_model, urlprefix=None):
     """
     Returns list of ``url`` items to CRUD a model.
     """
-    model_lower = model.__name__.lower()
+    model_lower = dest_model.__name__.lower()
 
     if urlprefix is None:
         urlprefix = ''
@@ -26,34 +28,61 @@ def crud_for_model(model, urlprefix=None):
 
     urls = []
 
+    class CRUDCreateView(CRUDMixin, CreateView):
+        model = dest_model
+        fields = [f.name for f in dest_model._meta.fields]
+        crud_template_name = 'cruds/create.html'
+
+    class CRUDDeleteView(CRUDMixin, DeleteView):
+        model = dest_model
+        crud_template_name = 'cruds/delete.html'
+
+        def get_success_url(self):
+            return reverse(utils.crud_url_name(self.model, utils.ACTION_LIST))
+
+    class CRUDDetailView(CRUDMixin, DetailView):
+        model = dest_model
+        fields = [f.name for f in dest_model._meta.fields]
+        crud_template_name = 'cruds/detail.html'
+
+    class CRUDListView(CRUDMixin, ListView):
+        model = dest_model
+        fields = [f.name for f in dest_model._meta.fields]
+        crud_template_name = 'cruds/list.html'
+
+    class CRUDUpdateView(CRUDMixin, UpdateView):
+        model = dest_model
+        fields = [f.name for f in dest_model._meta.fields]
+        crud_template_name = 'cruds/update.html'
+
     urls.append(url(
         r'%s/new/$' % urlprefix,
-        CRUDCreateView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_CREATE)
+        CRUDCreateView.as_view(),
+        name=utils.crud_url_name(dest_model, utils.ACTION_CREATE)
     ))
 
     urls.append(url(
         r'%s/(?P<pk>\d+)/remove/$' % urlprefix,
-        CRUDDeleteView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_DELETE)
+        CRUDDeleteView.as_view(model=dest_model),
+        name=utils.crud_url_name(dest_model, utils.ACTION_DELETE)
     ))
 
     urls.append(url(
         r'%s/(?P<pk>\d+)/$' % urlprefix,
-        CRUDDetailView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_DETAIL)
+        CRUDDetailView.as_view(model=dest_model),
+        name=utils.crud_url_name(dest_model, utils.ACTION_DETAIL)
     ))
 
     urls.append(url(
         r'%s/(?P<pk>\d+)/edit/$' % urlprefix,
-        CRUDUpdateView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_UPDATE)
+        CRUDUpdateView.as_view(model=dest_model),
+        name=utils.crud_url_name(dest_model, utils.ACTION_UPDATE)
     ))
 
     urls.append(url(
         r'%s/$' % urlprefix,
-        CRUDListView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_LIST)
+        CRUDListView.as_view(model=dest_model),
+        name=utils.crud_url_name(dest_model, utils.ACTION_LIST)
     ))
 
     return urls
