@@ -3,7 +3,7 @@
 History
 -------
 
-0.1.10 (unreleased)
+0.1.10 (2015-12-04)
 +++++++++++++++++++
 
 - Nothing changed yet.
