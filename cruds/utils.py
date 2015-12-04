@@ -41,11 +41,13 @@ def get_fields(model, include=None):
     Returns ordered dict in format 'field': 'verbose_name'
     """
     fields = OrderedDict()
-    for field in model._meta.fields:
-        if include is not None and field.name not in include:
-            continue
-        if field.editable:
-            fields[field.name] = field.verbose_name
+    info = model._meta
+    if include:
+        selected = [info.get_field_by_name(name)[0] for name in include]
+    else:
+        selected = [field for field in info.fields if field.editable]
+    for field in selected:
+        fields[field.name] = field.verbose_name
     return fields
 
 
