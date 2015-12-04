@@ -14,4 +14,4 @@ class TestUtils(TestCase):
 
     def test_get_fields_order(self):
         res = get_fields(Author, ('birthday', 'name'))
-        self.assertEqual(res.keys()[0], 'birthday')
+        self.assertEqual(list(res.keys())[0], 'birthday')
