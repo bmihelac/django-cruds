@@ -101,8 +101,12 @@ def crud_fields(obj, fields=None):
 
 
 @register.assignment_tag
-def get_fields(model, include=None):
+def get_fields(model, fields=None):
     """
     Assigns fields for model.
     """
-    return utils.get_fields(model, include)
+    include = [f.strip() for f in fields.split(',')] if fields else None
+    return utils.get_fields(
+        model,
+        include
+    )
