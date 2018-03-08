@@ -21,6 +21,14 @@ try:
         SITE_ID=1,
         NOSE_ARGS=['-s'],
         ROOT_URLCONF='tests.testapp.urls',
+        TEMPLATES=[
+            {
+                'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                'DIRS': [],
+                'APP_DIRS': True,
+                'OPTIONS': {},
+            },
+        ],
     )
 
     try:

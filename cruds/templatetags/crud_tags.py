@@ -6,7 +6,7 @@ import os.path
 from django.utils import six
 from django.db import models
 from django import template
-from django.core.urlresolvers import (
+from django.urls import (
     NoReverseMatch,
     reverse,
 )
@@ -27,7 +27,7 @@ def get_attr(obj, attr):
     return getattr(obj, attr)
 
 
-@register.assignment_tag
+@register.simple_tag
 def crud_url(obj, action):
     try:
         url = reverse(
@@ -100,7 +100,7 @@ def crud_fields(obj, fields=None):
     }
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_fields(model, fields=None):
     """
     Assigns fields for model.
