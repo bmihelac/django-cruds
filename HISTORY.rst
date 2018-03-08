@@ -6,7 +6,8 @@ History
 0.1.11 (unreleased)
 +++++++++++++++++++
 
-- Nothing changed yet.
+- breaking: Django 1.11 and Django 2.0 compatibility
+  Remove < Django 1.11 support
 
 
 0.1.10 (2015-12-04)
