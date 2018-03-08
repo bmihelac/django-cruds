@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import (
+from django.urls import (
     NoReverseMatch,
     reverse,
 )
@@ -18,6 +18,7 @@ from . import utils
 
 class CRUDMixin(object):
     crud_template_name = None
+    fields = '__all__'
 
     def get_context_data(self, **kwargs):
         """
