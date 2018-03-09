@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse
 from django.test.testcases import TestCase
 
 from cruds import utils
