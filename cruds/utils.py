@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.urls import reverse
+from django.db.models import Model
 
 from collections import OrderedDict
 
@@ -56,23 +57,36 @@ def get_fields(model, include=None):
     return fields
 
 
-def crud_url(instance, action, prefix=None, additional_kwargs=None):
-    """
-    Shortcut function returns url for instance and action passing `pk` kwarg.
+def crud_url(instance_or_model, action, prefix=None, additional_kwargs=None):
+    """Shortcut function returns URL for instance or model and action.
 
-    Example:
+    Example::
 
         crud_url(author, 'update')
 
     Is same as:
 
         reverse('testapp_author_update', kwargs={'pk': author.pk})
+
+    Example::
+
+        crud_url(Author, 'update')
+
+    Is same as:
+
+        reverse('testapp_author_list')
     """
     if additional_kwargs is None:
         additional_kwargs = {}
-    additional_kwargs['pk'] = instance.pk
-    return reverse(crud_url_name(instance._meta.model, action, prefix),
-                   kwargs=additional_kwargs)
+    if isinstance(instance_or_model, Model):
+        additional_kwargs['pk'] = instance_or_model.pk
+        model_name = instance_or_model._meta.model
+    else:
+        model_name = instance_or_model
+    return reverse(
+        crud_url_name(model_name, action, prefix),
+        kwargs=additional_kwargs
+    )
 
 
 def crud_permission_name(model, action, convert=True):

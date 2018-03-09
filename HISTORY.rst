@@ -6,6 +6,8 @@ History
 0.1.11 (unreleased)
 +++++++++++++++++++
 
+- feat: crud_url fuction accepts model alongside with instances
+
 - feat: add crud_permission_name function
 
 - breaking: Django 1.11 and Django 2.0 compatibility
