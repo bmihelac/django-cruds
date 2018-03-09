@@ -6,6 +6,8 @@ History
 0.1.11 (unreleased)
 +++++++++++++++++++
 
+- feat: Customizable CRUD url patterns with crud_urls
+
 - feat: crud_url fuction accepts model alongside with instances
 
 - feat: add crud_permission_name function

@@ -14,48 +14,98 @@ from .views import (
 )
 
 
-def crud_for_model(model, urlprefix=None):
+def crud_urls(model,
+              list_view=None,
+              create_view=None,
+              update_view=None,
+              detail_view=None,
+              delete_view=None,
+              url_prefix=None,
+              name_prefix=None,
+              list_views=None,
+              **kwargs):
+    """Returns a list of url patterns for model.
+
+    :param list_view:
+    :param create_view:
+    :param update_view:
+    :param detail_view:
+    :param delete_view:
+    :param url_prefix: prefix to prepend, default is `'$'`
+    :param name_prefix: prefix to prepend to name, default is empty string
+    :param list_views(dict): additional list views
+    :param **kwargs: additional detail views
+    :returns: urls
     """
-    Returns list of ``url`` items to CRUD a model.
+    if url_prefix is None:
+        url_prefix = r'^'
+    urls = []
+    if list_view:
+        urls.append(url(
+            url_prefix + '$',
+            list_view,
+            name=utils.crud_url_name(model, utils.ACTION_LIST, name_prefix)
+        ))
+    if create_view:
+        urls.append(url(
+            url_prefix + r'new/$',
+            create_view,
+            name=utils.crud_url_name(model, utils.ACTION_CREATE, name_prefix)
+        ))
+    if detail_view:
+        urls.append(url(
+            url_prefix + r'(?P<pk>\d+)/$',
+            detail_view,
+            name=utils.crud_url_name(model, utils.ACTION_DETAIL, name_prefix)
+        ))
+    if update_view:
+        urls.append(url(
+            url_prefix + r'(?P<pk>\d+)/edit/$',
+            update_view,
+            name=utils.crud_url_name(model, utils.ACTION_UPDATE, name_prefix)
+        ))
+    if delete_view:
+        urls.append(url(
+            url_prefix + r'(?P<pk>\d+)/remove/$',
+            delete_view,
+            name=utils.crud_url_name(model, utils.ACTION_DELETE, name_prefix)
+        ))
+
+    if list_views is not None:
+        for name, view in list_views.items():
+            urls.append(url(
+                url_prefix + r'%s/$' % name,
+                view,
+                name=utils.crud_url_name(model, name, name_prefix)
+            ))
+
+    for name, view in kwargs.items():
+        urls.append(url(
+            url_prefix + r'(?P<pk>\d+)/%s/$' % name,
+            view,
+            name=utils.crud_url_name(model, name, name_prefix)
+        ))
+    return urls
+
+
+def crud_for_model(model, urlprefix=None):
+    """Returns list of ``url`` items to CRUD a model.
     """
     model_lower = model.__name__.lower()
 
     if urlprefix is None:
         urlprefix = ''
-    urlprefix += model_lower
+    urlprefix += model_lower + '/'
 
-    urls = []
-
-    urls.append(url(
-        r'%s/new/$' % urlprefix,
-        CRUDCreateView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_CREATE)
-    ))
-
-    urls.append(url(
-        r'%s/(?P<pk>\d+)/remove/$' % urlprefix,
-        CRUDDeleteView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_DELETE)
-    ))
-
-    urls.append(url(
-        r'%s/(?P<pk>\d+)/$' % urlprefix,
-        CRUDDetailView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_DETAIL)
-    ))
-
-    urls.append(url(
-        r'%s/(?P<pk>\d+)/edit/$' % urlprefix,
-        CRUDUpdateView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_UPDATE)
-    ))
-
-    urls.append(url(
-        r'%s/$' % urlprefix,
-        CRUDListView.as_view(model=model),
-        name=utils.crud_url_name(model, utils.ACTION_LIST)
-    ))
-
+    urls = crud_urls(
+        model,
+        list_view=CRUDListView.as_view(model=model),
+        create_view=CRUDCreateView.as_view(model=model),
+        detail_view=CRUDDetailView.as_view(model=model),
+        update_view=CRUDUpdateView.as_view(model=model),
+        delete_view=CRUDDeleteView.as_view(model=model),
+        url_prefix=urlprefix,
+    )
     return urls
 
 

@@ -53,6 +53,14 @@ It is also possible to add CRUD for one model::
       </tbody>
     </table>
 
+Customizable CRUD url patterns ``crud_urls``::
+
+    urlpatterns += crud_urls(
+        Author, 
+        list_view=MyAuthorListView.as_view(),
+        activate=ActivateAuthorView.as_view(),
+    )
+
 Use ``cruds.util.crud_url`` shortcut function to quickly get url for
 instance for given action::
 
