@@ -62,6 +62,9 @@ Is same as::
 
         reverse('testapp_author_update', kwargs={'pk': author.pk})
 
+``cruds.util.crud_permission_name`` returns permission name using Django 
+naming convention, ie: `testapp.change_author`.
+
 Templates
 ^^^^^^^^^
 

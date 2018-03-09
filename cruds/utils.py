@@ -24,6 +24,11 @@ LIST_ACTIONS = (
 
 ALL_ACTIONS = LIST_ACTIONS + INSTANCE_ACTIONS
 
+MAP_PERMISSION_ACTIONS = {
+    'create': 'add',
+    'update': 'change',
+}
+
 
 def crud_url_name(model, action, prefix=None):
     """
@@ -68,3 +73,20 @@ def crud_url(instance, action, prefix=None, additional_kwargs=None):
     additional_kwargs['pk'] = instance.pk
     return reverse(crud_url_name(instance._meta.model, action, prefix),
                    kwargs=additional_kwargs)
+
+
+def crud_permission_name(model, action, convert=True):
+    """Returns permission name using Django naming convention: app_label.action_object.
+
+    If `convert` is True, `create` and `update` actions would be renamed
+    to `add` and `change`.
+    """
+    app_label = model._meta.app_label
+    model_lower = model.__name__.lower()
+    if convert:
+        action = MAP_PERMISSION_ACTIONS.get(action, action)
+    return '%s.%s_%s' % (
+        app_label,
+        action,
+        model_lower
+    )
