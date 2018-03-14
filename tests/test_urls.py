@@ -6,6 +6,7 @@ from cruds import views
 from cruds.urls import (
     crud_urls,
     crud_for_model,
+    crud_for_app,
 )
 
 from tests.testapp.models import (
@@ -28,6 +29,19 @@ class TestUrls(TestCase):
         url = urls[0]
         self.assertEqual(url.name, 'testapp_author_list')
         self.assertSequenceEqual(url.regex.pattern, r'^$')
+
+    def test_crud_urls_kwargs(self):
+        urls = crud_urls(
+            Author,
+            additional=self.view,
+        )
+        self.assertEqual(len(urls), 1)
+        url = urls[0]
+        self.assertEqual(url.name, 'testapp_author_additional')
+        self.assertSequenceEqual(
+            url.regex.pattern,
+            r'^(?P<pk>\d+)/additional/$'
+        )
 
     def test_crud_urls_url_prefix(self):
         urls = crud_urls(
@@ -69,3 +83,7 @@ class TestUrls(TestCase):
         self.assertIs(urls[3].callback.view_class, views.CRUDUpdateView)
         self.assertEqual(urls[4].name, 'testapp_author_delete')
         self.assertIs(urls[4].callback.view_class, views.CRUDDeleteView)
+
+    def test_cruds_for_app(self):
+        urls = crud_for_app('testapp')
+        self.assertNotEqual(len(urls), 0)

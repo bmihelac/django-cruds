@@ -5,8 +5,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from cruds.urls import (
-    crud_for_app,
+    crud_for_model,
 )
+from .models import Author, Country
 
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
 
 
 # add crud for whole app
-urlpatterns += crud_for_app('testapp')
+urlpatterns += crud_for_model(Author, urlprefix='testapp/')
+urlpatterns += crud_for_model(Country, urlprefix='testapp/')

@@ -38,14 +38,14 @@ class CRUDMixin(object):
                     url = reverse(
                         utils.crud_url_name(self.model, action),
                         kwargs={'pk': self.object.pk})
-                except NoReverseMatch:
+                except NoReverseMatch:  # pragma: no cover
                     url = None
                 context['url_%s' % action] = url
 
         for action in utils.LIST_ACTIONS:
             try:
                 url = reverse(utils.crud_url_name(self.model, action))
-            except NoReverseMatch:
+            except NoReverseMatch:  # pragma: no cover
                 url = None
             context['url_%s' % action] = url
 
