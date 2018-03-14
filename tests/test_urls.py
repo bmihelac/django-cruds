@@ -1,5 +1,6 @@
 from django.test.testcases import TestCase
 
+import django
 from django.views import View
 
 from cruds import views
@@ -12,6 +13,12 @@ from cruds.urls import (
 from tests.testapp.models import (
     Author,
 )
+
+
+def get_url_regex(url):
+    if django.VERSION < (2, 0):
+        return url.regex.pattern
+    return url.pattern.regex.pattern
 
 
 class TestUrls(TestCase):
@@ -28,7 +35,7 @@ class TestUrls(TestCase):
         self.assertEqual(len(urls), 1)
         url = urls[0]
         self.assertEqual(url.name, 'testapp_author_list')
-        self.assertSequenceEqual(url.regex.pattern, r'^$')
+        self.assertSequenceEqual(get_url_regex(url), r'^$')
 
     def test_crud_urls_kwargs(self):
         urls = crud_urls(
@@ -39,7 +46,7 @@ class TestUrls(TestCase):
         url = urls[0]
         self.assertEqual(url.name, 'testapp_author_additional')
         self.assertSequenceEqual(
-            url.regex.pattern,
+            get_url_regex(url),
             r'^(?P<pk>\d+)/additional/$'
         )
 
@@ -49,7 +56,7 @@ class TestUrls(TestCase):
             list_view=self.view,
             url_prefix=r'^author/'
         )
-        self.assertEqual(urls[0].regex.pattern, '^author/$')
+        self.assertEqual(get_url_regex(urls[0]), '^author/$')
 
     def test_crud_urls_name_prefix(self):
         urls = crud_urls(
@@ -67,8 +74,9 @@ class TestUrls(TestCase):
                 'aggregate2': self.view,
             }
         )
-        self.assertEqual(urls[0].name, 'testapp_author_aggregate')
-        self.assertEqual(urls[1].name, 'testapp_author_aggregate2')
+        url_names = [url.name for url in urls]
+        self.assertTrue('testapp_author_aggregate' in url_names)
+        self.assertTrue('testapp_author_aggregate2' in url_names)
 
     def test_crud_for_model(self):
         urls = crud_for_model(Author)

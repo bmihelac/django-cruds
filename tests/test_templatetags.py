@@ -4,7 +4,11 @@ from collections import namedtuple
 from django.test.testcases import TestCase
 from django.template import Context, Template
 
-from testapp.models import Author, Country, Continent
+from tests.testapp.models import (
+    Author,
+    Country,
+    Continent,
+)
 
 
 class TestTags(TestCase):
