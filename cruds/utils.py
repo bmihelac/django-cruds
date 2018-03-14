@@ -89,6 +89,26 @@ def crud_url(instance_or_model, action, prefix=None, additional_kwargs=None):
     )
 
 
+def crud_url_list(model, *args, **kwargs):
+    return crud_url(model, ACTION_LIST, *args, **kwargs)
+
+
+def crud_url_detail(instance, *args, **kwargs):
+    return crud_url(instance, ACTION_DETAIL, *args, **kwargs)
+
+
+def crud_url_update(instance, *args, **kwargs):
+    return crud_url(instance, ACTION_UPDATE, *args, **kwargs)
+
+
+def crud_url_create(model, *args, **kwargs):
+    return crud_url(model, ACTION_CREATE, *args, **kwargs)
+
+
+def crud_url_delete(instance, *args, **kwargs):
+    return crud_url(instance, ACTION_DELETE, *args, **kwargs)
+
+
 def crud_permission_name(model, action, convert=True):
     """Returns permission name using Django naming convention: app_label.action_object.
 
