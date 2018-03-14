@@ -3,7 +3,13 @@
 History
 -------
 
-0.1.11 (unreleased)
+1.1.0
++++++++++++++++++++
+
+- feat: add crud_url_* shortcuts
+
+
+1.0.0
 +++++++++++++++++++
 
 - feat: Customizable CRUD url patterns with crud_urls
@@ -14,6 +20,8 @@ History
 
 - breaking: Django 1.11 and Django 2.0 compatibility
   Remove < Django 1.11 support
+
+- test coverage 100%
 
 
 0.1.10 (2015-12-04)

@@ -39,3 +39,27 @@ class TestUtils(TestCase):
             utils.crud_url(Author, utils.ACTION_LIST),
             '/testapp/author/'
         )
+
+    def test_crud_url_shortcuts(self):
+        instance = Author.objects.create(name='foo')
+
+        self.assertEqual(
+            utils.crud_url_list(Author),
+            '/testapp/author/'
+        )
+        self.assertEqual(
+            utils.crud_url_create(Author),
+            '/testapp/author/new/'
+        )
+        self.assertEqual(
+            utils.crud_url_detail(instance),
+            '/testapp/author/1/'
+        )
+        self.assertEqual(
+            utils.crud_url_update(instance),
+            '/testapp/author/1/edit/'
+        )
+        self.assertEqual(
+            utils.crud_url_delete(instance),
+            '/testapp/author/1/remove/'
+        )
