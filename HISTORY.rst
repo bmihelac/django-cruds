@@ -9,8 +9,8 @@ History
 - feat: add crud_url_* shortcuts
 
 
-1.0.0
-+++++++++++++++++++
+1.0.0 (2018-03-14)
+++++++++++++++++++
 
 - feat: Customizable CRUD url patterns with crud_urls
 
