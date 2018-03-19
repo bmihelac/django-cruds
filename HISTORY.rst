@@ -3,10 +3,10 @@
 History
 -------
 
-1.1.1 (unreleased)
+1.2.0 (unreleased)
 ++++++++++++++++++
 
-- Nothing changed yet.
+- feat: format_value RelatedManager support
 
 
 1.1.0 (2018-03-14)
