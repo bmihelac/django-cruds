@@ -38,6 +38,16 @@ def crud_url(obj, action):
     return url
 
 
+def format_value_instance(value):
+    url = crud_url(value, utils.ACTION_DETAIL)
+    if url:
+        return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
+    if hasattr(value, 'get_absolute_url'):
+        url = getattr(value, 'get_absolute_url')()
+        return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
+    return value
+
+
 @register.filter
 def format_value(obj, field_name):
     """
@@ -60,13 +70,12 @@ def format_value(obj, field_name):
             return ''
 
     if isinstance(value, models.Model):
-        url = crud_url(value, utils.ACTION_DETAIL)
-        if url:
-            return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
-        else:
-            if hasattr(value, 'get_absolute_url'):
-                url = getattr(value, 'get_absolute_url')()
-                return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
+        return format_value_instance(value)
+
+    if isinstance(value, models.Manager):
+        return mark_safe(', '.join(
+            [format_value_instance(instance) for instance in value.all()]
+        ))
     if value is None:
         value = ""
     return value

@@ -73,6 +73,24 @@ class TestTags(TestCase):
         res = template.render(context)
         self.assertEqual(res, '<a href="/">Foontinent</a>')
 
+        delattr(Continent, 'get_absolute_url')
+        template = Template(
+            '{% load crud_tags %}{{ instance.country|format_value:"continent" }}')
+        res = template.render(context)
+        self.assertEqual(res, 'Foontinent')
+
+    def test_format_value_queryset(self):
+        continent = Continent.objects.create(name='Foontinent')
+        continent.country_set.create(name='Fooland')
+        continent.country_set.create(name='Barland')
+        template = Template(
+            '{% load crud_tags %}{{ instance|format_value:"country_set" }}')
+        res = template.render(Context({'instance': continent}))
+        self.assertEqual(
+            res,
+            '<a href="/testapp/country/1/">Fooland</a>, <a href="/testapp/country/2/">Barland</a>'  # noqa
+        )
+
     def test_crud_fields(self):
         context = Context({'instance': self.author})
 
