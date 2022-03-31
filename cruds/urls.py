@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.conf.urls import url
-from django.db.models import get_app, get_models
+from django.apps import apps
 
 from . import utils
 from .views import (
@@ -65,8 +65,8 @@ def crud_for_app(app_label, urlprefix=None):
     """
     if urlprefix is None:
         urlprefix = app_label + '/'
-    app = get_app(app_label)
+    app = apps.get_app_config(app_label)
     urls = []
-    for model in get_models(app):
+    for model in app.get_models(app):
         urls += crud_for_model(model, urlprefix)
     return urls
