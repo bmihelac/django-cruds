@@ -3,10 +3,8 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class Continent(models.Model):
     name = models.CharField(max_length=100)
 
@@ -20,7 +18,6 @@ class Continent(models.Model):
         return '/'
 
 
-@python_2_unicode_compatible
 class Country(models.Model):
     name = models.CharField(max_length=100)
     continent = models.ForeignKey(
@@ -38,7 +35,6 @@ class Country(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class Author(models.Model):
     name = models.CharField(max_length=100)
     birthday = models.DateTimeField(auto_now_add=True)

@@ -58,7 +58,7 @@ class TestTags(TestCase):
         template = Template(
             '{% load crud_tags %}{{ instance|format_value:"document" }}')
         res = template.render(context)
-        self.assertEqual(res, '<a href="document.pdf">document.pdf</a>')
+        self.assertEqual(res, '<a href="/document.pdf">document.pdf</a>')
 
         self.author.country = Country.objects.create(name='Fooland')
         template = Template(
