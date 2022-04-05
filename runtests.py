@@ -12,6 +12,7 @@ try:
             }
         },
         INSTALLED_APPS=[
+            "django.contrib.admin",
             "django.contrib.auth",
             "django.contrib.contenttypes",
             "django.contrib.sites",
@@ -29,6 +30,7 @@ try:
                 'OPTIONS': {},
             },
         ],
+        SECRET_KEY="secret-key"
     )
 
     try:

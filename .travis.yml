@@ -2,14 +2,12 @@ language: python
 cache: pip
 
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
   - "3.6"
+  - "3.7"
+  - "3.8"
 
 env:
-  - DJANGO="Django>=1.11,<1.12"
-  - DJANGO="Django>=2.0,<2.1"
+  - DJANGO="Django>=3.2,<4"
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
@@ -21,7 +19,3 @@ script: coverage run --source cruds runtests.py
 
 # report coverage to coveralls.io
 after_success: coveralls
-matrix:
-  exclude:
-    - python: "2.7"
-      env: DJANGO="Django>=2.0,<2.1"
