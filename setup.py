@@ -27,7 +27,7 @@ setup(
     name='django-cruds',
     version=version,
     description="""django-cruds is simple drop-in django app that creates CRUD for faster prototyping.""",  # noqa
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     author='Bojan Mihelac',
     author_email='bmihelac@mihelac.org',
     url='https://github.com/bmihelac/django-cruds',
