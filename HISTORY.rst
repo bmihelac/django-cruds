@@ -3,7 +3,7 @@
 History
 -------
 
-2.0.0 (unreleased)
+2.0.0 (2022-04-26)
 ++++++++++++++++++
 
 - Django 3.2 compatibility, drop unmaintained Django versions
