@@ -104,5 +104,4 @@ Then use it in a project, add ``cruds`` to ``INSTALLED_APPS``.
 Requirements
 ------------
 
-* Python 2.7+ or Python 3.4+
-* Django >= 1.11
+* Django>=3.2<=4.0
