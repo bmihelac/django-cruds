@@ -2,6 +2,10 @@
 {% load i18n %}
 {% load crud_tags %}
 
+{% block title %}
+{{ object }}
+{% endblock %}
+
 {% block body %}
   <h1>{{ object }}</h1>
 

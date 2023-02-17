@@ -1,6 +1,10 @@
 {% extends "cruds/base.html" %}
 {% load i18n %}
 
+{% block title %}
+{% trans "Edit" %} {{ model_verbose_name }}
+{% endblock %}
+
 {% block body %}
   <h1>{% trans "Edit" %} {{ model_verbose_name }}</h1>
 
