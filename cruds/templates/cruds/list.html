@@ -2,6 +2,10 @@
 {% load i18n %}
 {% load crud_tags %}
 
+{% block title %}
+{{ model_verbose_name }}
+{% endblock %}
+
 {% block body %}
   <h1>{{ model_verbose_name }}</h1>
 

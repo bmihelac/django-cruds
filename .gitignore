@@ -43,3 +43,5 @@ docs/_build
 
 # pyenv
 .python-version
+
+.venv

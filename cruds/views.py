@@ -18,36 +18,36 @@ from . import utils
 
 class CRUDMixin(object):
     crud_template_name = None
-    fields = '__all__'
+    fields = "__all__"
 
     def get_context_data(self, **kwargs):
         """
         Adds available urls and names.
         """
         context = super(CRUDMixin, self).get_context_data(**kwargs)
-        context.update({
-            'model_verbose_name': self.model._meta.verbose_name,
-            'model_verbose_name_plural': self.model._meta.verbose_name_plural,
-        })
+        context.update(
+            {
+                "model_verbose_name": self.model._meta.verbose_name,
+                "model_verbose_name_plural": self.model._meta.verbose_name_plural,
+            }
+        )
 
-        context['fields'] = utils.get_fields(self.model)
+        context["fields"] = utils.get_fields(self.model)
 
-        if hasattr(self, 'object') and self.object:
+        if hasattr(self, "object") and self.object:
             for action in utils.INSTANCE_ACTIONS:
                 try:
-                    url = reverse(
-                        utils.crud_url_name(self.model, action),
-                        kwargs={'pk': self.object.pk})
+                    url = reverse(utils.crud_url_name(self.model, action), kwargs={"pk": self.object.pk})
                 except NoReverseMatch:  # pragma: no cover
                     url = None
-                context['url_%s' % action] = url
+                context[f"url_{action}"] = url
 
         for action in utils.LIST_ACTIONS:
             try:
                 url = reverse(utils.crud_url_name(self.model, action))
             except NoReverseMatch:  # pragma: no cover
                 url = None
-            context['url_%s' % action] = url
+            context[f"url_{action}"] = url
 
         return context
 
@@ -61,29 +61,27 @@ class CRUDMixin(object):
         return names
 
     def get_success_url(self):
-        return reverse(
-            utils.crud_url_name(self.model, utils.ACTION_DETAIL),
-            kwargs={'pk': self.object.pk})
+        return reverse(utils.crud_url_name(self.model, utils.ACTION_DETAIL), kwargs={"pk": self.object.pk})
 
 
 class CRUDCreateView(CRUDMixin, CreateView):
-    crud_template_name = 'cruds/create.html'
+    crud_template_name = "cruds/create.html"
 
 
 class CRUDDeleteView(CRUDMixin, DeleteView):
-    crud_template_name = 'cruds/delete.html'
+    crud_template_name = "cruds/delete.html"
 
     def get_success_url(self):
         return reverse(utils.crud_url_name(self.model, utils.ACTION_LIST))
 
 
 class CRUDDetailView(CRUDMixin, DetailView):
-    crud_template_name = 'cruds/detail.html'
+    crud_template_name = "cruds/detail.html"
 
 
 class CRUDListView(CRUDMixin, ListView):
-    crud_template_name = 'cruds/list.html'
+    crud_template_name = "cruds/list.html"
 
 
 class CRUDUpdateView(CRUDMixin, UpdateView):
-    crud_template_name = 'cruds/update.html'
+    crud_template_name = "cruds/update.html"

@@ -29,21 +29,18 @@ def get_attr(obj, attr):
 @register.simple_tag
 def crud_url(obj, action):
     try:
-        url = reverse(
-            utils.crud_url_name(type(obj), action),
-            kwargs={'pk': obj.pk})
+        url = reverse(utils.crud_url_name(type(obj), action), kwargs={"pk": obj.pk})
     except NoReverseMatch:
         url = None
     return url
 
 
 def format_value_instance(value):
-    url = crud_url(value, utils.ACTION_DETAIL)
-    if url:
-        return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
-    if hasattr(value, 'get_absolute_url'):
-        url = getattr(value, 'get_absolute_url')()
-        return mark_safe('<a href="%s">%s</a>' % (url, escape(value)))
+    if url := crud_url(value, utils.ACTION_DETAIL):
+        return mark_safe(f'<a href="{url}">{escape(value)}</a>')
+    if hasattr(value, "get_absolute_url"):
+        url = getattr(value, "get_absolute_url")()
+        return mark_safe(f'<a href="{url}">{escape(value)}</a>')
     return value
 
 
@@ -54,33 +51,27 @@ def format_value(obj, field_name):
 
     If value is model instance returns link to detail view if exists.
     """
-    display_func = getattr(obj, 'get_%s_display' % field_name, None)
-    if display_func:
+    if display_func := getattr(obj, f"get_{field_name}_display", None):
         return display_func()
     value = getattr(obj, field_name)
 
     if isinstance(value, models.fields.files.FieldFile):
         if value:
-            return mark_safe('<a href="%s">%s</a>' % (
-                value.url,
-                os.path.basename(value.name),
-            ))
+            return mark_safe(f'<a href="{value.url}">{os.path.basename(value.name)}</a>')
         else:
-            return ''
+            return ""
 
     if isinstance(value, models.Model):
         return format_value_instance(value)
 
     if isinstance(value, models.Manager):
-        return mark_safe(', '.join(
-            [format_value_instance(instance) for instance in value.all()]
-        ))
+        return mark_safe(", ".join([format_value_instance(instance) for instance in value.all()]))
     if value is None:
         value = ""
     return value
 
 
-@register.inclusion_tag('cruds/templatetags/crud_fields.html')
+@register.inclusion_tag("cruds/templatetags/crud_fields.html")
 def crud_fields(obj, fields=None):
     """
     Display object fields in table rows::
@@ -100,11 +91,11 @@ def crud_fields(obj, fields=None):
     if fields is None:
         fields = utils.get_fields(type(obj))
     elif isinstance(fields, str):
-        field_names = [f.strip() for f in fields.split(',')]
+        field_names = [f.strip() for f in fields.split(",")]
         fields = utils.get_fields(type(obj), include=field_names)
     return {
-        'object': obj,
-        'fields': fields,
+        "object": obj,
+        "fields": fields,
     }
 
 
@@ -113,8 +104,5 @@ def get_fields(model, fields=None):
     """
     Assigns fields for model.
     """
-    include = [f.strip() for f in fields.split(',')] if fields else None
-    return utils.get_fields(
-        model,
-        include
-    )
+    include = [f.strip() for f in fields.split(",")] if fields else None
+    return utils.get_fields(model, include)

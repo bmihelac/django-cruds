@@ -7,11 +7,11 @@ from django.db.models import Model
 from collections import OrderedDict
 
 
-ACTION_CREATE = 'create'
-ACTION_DELETE = 'delete'
-ACTION_DETAIL = 'detail'
-ACTION_LIST = 'list'
-ACTION_UPDATE = 'update'
+ACTION_CREATE = "create"
+ACTION_DELETE = "delete"
+ACTION_DETAIL = "detail"
+ACTION_LIST = "list"
+ACTION_UPDATE = "update"
 
 INSTANCE_ACTIONS = (
     ACTION_DELETE,
@@ -26,8 +26,8 @@ LIST_ACTIONS = (
 ALL_ACTIONS = LIST_ACTIONS + INSTANCE_ACTIONS
 
 MAP_PERMISSION_ACTIONS = {
-    'create': 'add',
-    'update': 'change',
+    "create": "add",
+    "update": "change",
 }
 
 
@@ -39,7 +39,7 @@ def crud_url_name(model, action, prefix=None):
         prefix = ""
     app_label = model._meta.app_label
     model_lower = model.__name__.lower()
-    return '%s%s_%s_%s' % (prefix, app_label, model_lower, action)
+    return f"{prefix}{app_label}_{model_lower}_{action}"
 
 
 def get_fields(model, include=None):
@@ -79,14 +79,11 @@ def crud_url(instance_or_model, action, prefix=None, additional_kwargs=None):
     if additional_kwargs is None:
         additional_kwargs = {}
     if isinstance(instance_or_model, Model):
-        additional_kwargs['pk'] = instance_or_model.pk
+        additional_kwargs["pk"] = instance_or_model.pk
         model_name = instance_or_model._meta.model
     else:
         model_name = instance_or_model
-    return reverse(
-        crud_url_name(model_name, action, prefix),
-        kwargs=additional_kwargs
-    )
+    return reverse(crud_url_name(model_name, action, prefix), kwargs=additional_kwargs)
 
 
 def crud_url_list(model, *args, **kwargs):
@@ -119,8 +116,4 @@ def crud_permission_name(model, action, convert=True):
     model_lower = model.__name__.lower()
     if convert:
         action = MAP_PERMISSION_ACTIONS.get(action, action)
-    return '%s.%s_%s' % (
-        app_label,
-        action,
-        model_lower
-    )
+    return f"{app_label}.{action}_{model_lower}"

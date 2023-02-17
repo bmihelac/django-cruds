@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.conf.urls import url
+from django.urls import re_path
 from django.apps import apps
 
 from . import utils
@@ -14,16 +14,7 @@ from .views import (
 )
 
 
-def crud_urls(model,
-              list_view=None,
-              create_view=None,
-              update_view=None,
-              detail_view=None,
-              delete_view=None,
-              url_prefix=None,
-              name_prefix=None,
-              list_views=None,
-              **kwargs):
+def crud_urls(model, list_view=None, create_view=None, update_view=None, detail_view=None, delete_view=None, url_prefix=None, name_prefix=None, list_views=None, **kwargs):
     """Returns a list of url patterns for model.
 
     :param list_view:
@@ -38,64 +29,58 @@ def crud_urls(model,
     :returns: urls
     """
     if url_prefix is None:
-        url_prefix = r'^'
+        url_prefix = r"^"
     urls = []
     if list_view:
-        urls.append(url(
-            url_prefix + '$',
-            list_view,
-            name=utils.crud_url_name(model, utils.ACTION_LIST, name_prefix)
-        ))
+        urls.append(
+            re_path(
+                f"{url_prefix}$",
+                list_view,
+                name=utils.crud_url_name(model, utils.ACTION_LIST, name_prefix),
+            )
+        )
     if create_view:
-        urls.append(url(
-            url_prefix + r'new/$',
-            create_view,
-            name=utils.crud_url_name(model, utils.ACTION_CREATE, name_prefix)
-        ))
+        urls.append(
+            re_path(
+                f"{url_prefix}new/$",
+                create_view,
+                name=utils.crud_url_name(model, utils.ACTION_CREATE, name_prefix),
+            )
+        )
     if detail_view:
-        urls.append(url(
-            url_prefix + r'(?P<pk>\d+)/$',
-            detail_view,
-            name=utils.crud_url_name(model, utils.ACTION_DETAIL, name_prefix)
-        ))
+        urls.append(re_path(url_prefix + r"(?P<pk>\d+)/$", detail_view, name=utils.crud_url_name(model, utils.ACTION_DETAIL, name_prefix)))
     if update_view:
-        urls.append(url(
-            url_prefix + r'(?P<pk>\d+)/edit/$',
-            update_view,
-            name=utils.crud_url_name(model, utils.ACTION_UPDATE, name_prefix)
-        ))
+        urls.append(re_path(url_prefix + r"(?P<pk>\d+)/edit/$", update_view, name=utils.crud_url_name(model, utils.ACTION_UPDATE, name_prefix)))
     if delete_view:
-        urls.append(url(
-            url_prefix + r'(?P<pk>\d+)/remove/$',
-            delete_view,
-            name=utils.crud_url_name(model, utils.ACTION_DELETE, name_prefix)
-        ))
+        urls.append(re_path(url_prefix + r"(?P<pk>\d+)/remove/$", delete_view, name=utils.crud_url_name(model, utils.ACTION_DELETE, name_prefix)))
 
     if list_views is not None:
-        for name, view in list_views.items():
-            urls.append(url(
-                url_prefix + r'%s/$' % name,
+        urls.extend(
+            re_path(
+                f"{url_prefix}{name}/$",
                 view,
-                name=utils.crud_url_name(model, name, name_prefix)
-            ))
-
-    for name, view in kwargs.items():
-        urls.append(url(
-            url_prefix + r'(?P<pk>\d+)/%s/$' % name,
+                name=utils.crud_url_name(model, name, name_prefix),
+            )
+            for name, view in list_views.items()
+        )
+    urls.extend(
+        re_path(
+            url_prefix + r"(?P<pk>\d+)/%s/$" % name,
             view,
-            name=utils.crud_url_name(model, name, name_prefix)
-        ))
+            name=utils.crud_url_name(model, name, name_prefix),
+        )
+        for name, view in kwargs.items()
+    )
     return urls
 
 
 def crud_for_model(model, urlprefix=None):
-    """Returns list of ``url`` items to CRUD a model.
-    """
+    """Returns list of ``url`` items to CRUD a model."""
     model_lower = model.__name__.lower()
 
     if urlprefix is None:
-        urlprefix = ''
-    urlprefix += model_lower + '/'
+        urlprefix = ""
+    urlprefix += f"{model_lower}/"
 
     urls = crud_urls(
         model,
@@ -114,7 +99,7 @@ def crud_for_app(app_label, urlprefix=None):
     Returns list of ``url`` items to CRUD an app.
     """
     if urlprefix is None:
-        urlprefix = app_label + '/'
+        urlprefix = f"{app_label}/"
     app = apps.get_app_config(app_label)
     urls = []
     for model in app.get_models():
