@@ -70,7 +70,7 @@ def crud_url(instance_or_model, action, prefix=None, additional_kwargs=None):
 
     Example::
 
-        crud_url(Author, 'update')
+        crud_url(Author, 'list')
 
     Is same as:
 
