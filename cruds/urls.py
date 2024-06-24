@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-from django.conf.urls import url
 from django.apps import apps
 
 from . import utils
@@ -12,6 +10,7 @@ from .views import (
     CRUDListView,
     CRUDUpdateView,
 )
+from django.urls import re_path
 
 
 def crud_urls(model,
@@ -41,31 +40,31 @@ def crud_urls(model,
         url_prefix = r'^'
     urls = []
     if list_view:
-        urls.append(url(
+        urls.append(re_path(
             url_prefix + '$',
             list_view,
             name=utils.crud_url_name(model, utils.ACTION_LIST, name_prefix)
         ))
     if create_view:
-        urls.append(url(
+        urls.append(re_path(
             url_prefix + r'new/$',
             create_view,
             name=utils.crud_url_name(model, utils.ACTION_CREATE, name_prefix)
         ))
     if detail_view:
-        urls.append(url(
+        urls.append(re_path(
             url_prefix + r'(?P<pk>\d+)/$',
             detail_view,
             name=utils.crud_url_name(model, utils.ACTION_DETAIL, name_prefix)
         ))
     if update_view:
-        urls.append(url(
+        urls.append(re_path(
             url_prefix + r'(?P<pk>\d+)/edit/$',
             update_view,
             name=utils.crud_url_name(model, utils.ACTION_UPDATE, name_prefix)
         ))
     if delete_view:
-        urls.append(url(
+        urls.append(re_path(
             url_prefix + r'(?P<pk>\d+)/remove/$',
             delete_view,
             name=utils.crud_url_name(model, utils.ACTION_DELETE, name_prefix)
@@ -73,14 +72,14 @@ def crud_urls(model,
 
     if list_views is not None:
         for name, view in list_views.items():
-            urls.append(url(
+            urls.append(re_path(
                 url_prefix + r'%s/$' % name,
                 view,
                 name=utils.crud_url_name(model, name, name_prefix)
             ))
 
     for name, view in kwargs.items():
-        urls.append(url(
+        urls.append(re_path(
             url_prefix + r'(?P<pk>\d+)/%s/$' % name,
             view,
             name=utils.crud_url_name(model, name, name_prefix)

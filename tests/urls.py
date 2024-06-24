@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.conf.urls import url, include
+from django.conf.urls import include
 from django.contrib import admin
 
 from cruds.urls import crud_for_app
+from django.urls import path
 
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    path('admin/', include(admin.site.urls)),
 ]
 
 
