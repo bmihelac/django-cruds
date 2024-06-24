@@ -1,4 +1,7 @@
-# History
+## 3.0.0 (2024-06-24)
+
+* chore: convert HISTORY to markdown ([225cf17](https://github.com/bmihelac/django-cruds/commit/225cf17))
+
 
 ## 2.0.1 (unreleased)
 
